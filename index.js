@@ -11,9 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-// Uncomment and use your actual routes if you have them
-// const linkRouter = require('./routes/linkRoutes');
-// app.use(linkRouter);
+const reviewRouter = require('./routes/reviewsRoute');
+app.use(reviewRouter);
 
 // 404 Handler
 app.use('*', (req, res) => {
