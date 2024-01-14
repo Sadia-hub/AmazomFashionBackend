@@ -12,7 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 const reviewRouter = require('./routes/reviewsRoute');
+const userRouter = require("./routes/userRoute")
+
 app.use(reviewRouter);
+app.use(userRouter);
 
 // 404 Handler
 app.use('*', (req, res) => {

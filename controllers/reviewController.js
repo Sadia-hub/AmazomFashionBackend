@@ -2,9 +2,23 @@ const Fashion  = require('../models/reviewModel');
 
 const getAllReviews = async (req, res) => { // get all users
     try{
+        const allReviews = await Fashion.aggregate([
+            {
+                $group: {
+                    _id: '$asin',
+                    reviews: { $push: '$$ROOT' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    productID: '$_id',
+                    reviews: 1
+                }
+            }
+        ]);
         
-        const allReviews = await Fashion.find();
-         console.log(allReviews)
+        console.log(allReviews)
         res.status(200).json({allReviews, success:true})
         
     }
