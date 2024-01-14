@@ -1,4 +1,6 @@
 const User = require("../models/userModel")
+const jwt = require("jsonwebtoken");
+
 const signup = async (req, res) =>{
     try{
         const user = await User.create(req.body)
@@ -20,9 +22,10 @@ const login = async (req, res) =>{
         });
 
         if(user){
-            return res.status(200).json({user, success:true})
+            const token = jwt.sign({username:email},process.env.SECRET_KEY,{expiresIn:60*30})
+            return res.status(200).json({user, token, success:true})
         }
-        res.status(404).json({success:false, msg:"User does not exist"})
+        res.status(404).json({success:false, msg:"Either email or password is wrong"})
         
         
     }
